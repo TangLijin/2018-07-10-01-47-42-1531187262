@@ -2,8 +2,8 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Add {
     public int getSumOfEvens(int leftBorder, int rightBorder) {
@@ -15,11 +15,12 @@ public class Add {
     }
 
     public int getSumTripleAndAddTwo(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        return arrayList.stream().map(item -> item * 3 + 2).reduce(0,(a,b) -> a + b);
+       // return  arrayList.stream().mapToInt(i -> i * 3 + 2)
     }
 
     public List<Integer> getTripleOfOddAndAddTwo(List<Integer> arrayList) {
-        ArrayList<Integer> result = new ArrayList<>();
+        /*ArrayList<Integer> result = new ArrayList<>();
         for(int i = 0; i < arrayList.size(); i++){
             int temp = arrayList.get(i);
             if(temp % 2 != 0){
@@ -29,12 +30,17 @@ public class Add {
                 result.add(temp);
             }
         }
-        return result;
+
+        return result;*/
+        return arrayList.stream().map((item) -> {
+            return  item % 2 == 0 ? item : item *3 + 2;
+        }).collect(Collectors.toList());
         //throw new NotImplementedException();
     }
 
     public int getSumOfProcessedOdds(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        return arrayList.stream().filter(item -> item % 2 == 1).map(item -> item * 3 + 5).reduce(0,(a,b) -> a+b);
+//        throw new NotImplementedException();
     }
 
     public double getMedianOfEven(List<Integer> arrayList) {
@@ -42,7 +48,9 @@ public class Add {
     }
 
     public double getAverageOfEven(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        return arrayList.stream().filter(i -> i % 2 == 0).mapToDouble(i -> i).average().orElse(0);
+
+        //throw new NotImplementedException();
     }
 
     public boolean isIncludedInEvenIndex(List<Integer> arrayList, Integer specialElment) {
